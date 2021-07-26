@@ -12,7 +12,7 @@ def writer (i, ans):
     #and save answer .txt file with suitable index
     #let's open file, insert answer number as file index, 
     #write  and close the file
-    MyFile = open('Ответ_{index}.txt'.format(index = i), 'w')
+    MyFile = open('Answer_{index}.txt'.format(index = i), 'w')
     print(ans, file=MyFile, end="")
     MyFile.close()
 
