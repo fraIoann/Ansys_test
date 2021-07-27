@@ -5,6 +5,7 @@
 
 import pandas as pd
 from collections import Counter
+from sklearn.tree import DecisionTreeClassifier
 
 def writer (i, ans):
     #function writes an answer to .txt file in the work directory
@@ -74,4 +75,18 @@ for i in range(names.size):
 name_found = Counter(names_list).most_common(1)[0][0]
 writer(6, name_found)
 
+#let's prepare data for decision tree (exclude rows with NaN)
+#chose passenger class, fare cost, age sex and survivor signs
+X = data[['Pclass', 'Fare', 'Age', 'Sex', 'Survived']].dropna()
+X = pd.get_dummies(X, columns=['Sex'], drop_first=True)
+
+#build decision tree
+clf = DecisionTreeClassifier(random_state=241)
+clf.fit(X.iloc[:, :4], X.Survived)
+#let's find importance of signs
+importances = clf.feature_importances_
+header = X.columns.values.tolist()
+answer = '{} {}'.format(header[1], header[3][:3])
+
+writer(7, answer)
       
